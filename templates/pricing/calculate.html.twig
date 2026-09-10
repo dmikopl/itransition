@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Price calculator{% endblock %}
+
+{% block body %}
+    <nav>
+        <a href="{{ path('pricing_calculate') }}">Calculator</a>
+    </nav>
+
+    <h1>Price calculator</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.activity) }}
+        {{ form_row(form.option) }}
+        {{ form_row(form.activityDate) }}
+        {{ form_row(form.bookingDate) }}
+        {{ form_row(form.ticketCategories) }}
+        {{ form_row(form.calculate) }}
+    {{ form_end(form) }}
+
+    {% if result %}
+        <h2>Applied rules</h2>
+        {% if result.appliedRules is empty %}
+            <p>No pricing rules applied.</p>
+        {% else %}
+            <ul>
+                {% for rule in result.appliedRules %}
+                    <li>{{ rule.name }} (priority {{ rule.priority }})</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <h2>Ticket prices</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Original</th>
+                    <th>Steps</th>
+                    <th>Final</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in result.categories %}
+                    <tr>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.originalPrice.format }}</td>
+                        <td>
+                            {% if category.appliedAdjustments is empty %}
+                                -
+                            {% else %}
+                                <ul>
+                                    {% for step in category.appliedAdjustments %}
+                                        <li>
+                                            {{ step.ruleName }}:
+                                            {{ step.priceBefore.format }} → {{ step.priceAfter.format }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </td>
+                        <td>{{ category.finalPrice.format }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p>
+            <strong>Original total:</strong> {{ result.originalTotal.format }}
+            <br>
+            <strong>Final total:</strong> {{ result.finalTotal.format }}
+        </p>
+    {% endif %}
+{% endblock %}
