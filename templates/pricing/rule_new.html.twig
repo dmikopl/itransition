@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New pricing rule{% endblock %}
+
+{% block body %}
+    <nav>
+        <a href="{{ path('pricing_calculate') }}">Calculator</a>
+        |
+        <a href="{{ path('pricing_rules_index') }}">Rules</a>
+    </nav>
+
+    <h1>New pricing rule</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.priority) }}
+        {{ form_row(form.adjustmentType) }}
+        {{ form_row(form.adjustmentValue) }}
+        {{ form_row(form.activity) }}
+        {{ form_row(form.option) }}
+        {{ form_row(form.dateFrom) }}
+        {{ form_row(form.dateTo) }}
+        {{ form_row(form.daysOfWeek) }}
+        {{ form_row(form.minAdvanceDays) }}
+        {{ form_row(form.save) }}
+    {{ form_end(form) }}
+{% endblock %}

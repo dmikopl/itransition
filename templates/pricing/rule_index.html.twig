@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pricing rules{% endblock %}
+
+{% block body %}
+    <nav>
+        <a href="{{ path('pricing_calculate') }}">Calculator</a>
+        |
+        <a href="{{ path('pricing_rules_index') }}">Rules</a>
+    </nav>
+
+    <h1>Pricing rules</h1>
+
+    <p><a href="{{ path('pricing_rules_new') }}">Add rule</a></p>
+
+    {% if rules is empty %}
+        <p>No rules yet.</p>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Priority</th>
+                    <th>Adjustment</th>
+                    <th>Conditions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rule in rules %}
+                    <tr>
+                        <td>{{ rule.name }}</td>
+                        <td>{{ rule.priority }}</td>
+                        <td>{{ rule.adjustment.describe }}</td>
+                        <td>
+                            {% if rule.conditions is empty %}
+                                Always applies
+                            {% else %}
+                                {{ rule.conditions|length }} condition(s)
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
