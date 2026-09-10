@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Pricing\Infrastructure\Doctrine;
 
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,6 +14,7 @@ class PricingRuleEntity
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /** @phpstan-ignore property.unusedType */
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -30,10 +30,10 @@ class PricingRuleEntity
     private ?string $activityOption = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $dateFrom = null;
+    private ?\DateTimeImmutable $dateFrom = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $dateTo = null;
+    private ?\DateTimeImmutable $dateTo = null;
 
     /**
      * @var list<int>|null
@@ -51,8 +51,11 @@ class PricingRuleEntity
     private int $adjustmentValue;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $createdAt;
 
+    /**
+     * @param list<int>|null $daysOfWeek
+     */
     public function __construct(
         string $name,
         int $priority,
@@ -60,8 +63,8 @@ class PricingRuleEntity
         int $adjustmentValue,
         ?string $activity = null,
         ?string $activityOption = null,
-        ?DateTimeImmutable $dateFrom = null,
-        ?DateTimeImmutable $dateTo = null,
+        ?\DateTimeImmutable $dateFrom = null,
+        ?\DateTimeImmutable $dateTo = null,
         ?array $daysOfWeek = null,
         ?int $minAdvanceDays = null,
     ) {
@@ -75,7 +78,7 @@ class PricingRuleEntity
         $this->dateTo = $dateTo;
         $this->daysOfWeek = $daysOfWeek;
         $this->minAdvanceDays = $minAdvanceDays;
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -103,12 +106,12 @@ class PricingRuleEntity
         return $this->activityOption;
     }
 
-    public function getDateFrom(): ?DateTimeImmutable
+    public function getDateFrom(): ?\DateTimeImmutable
     {
         return $this->dateFrom;
     }
 
-    public function getDateTo(): ?DateTimeImmutable
+    public function getDateTo(): ?\DateTimeImmutable
     {
         return $this->dateTo;
     }
@@ -136,7 +139,7 @@ class PricingRuleEntity
         return $this->adjustmentValue;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }

@@ -12,7 +12,6 @@ use App\Pricing\Domain\Model\PricingContext;
 use App\Pricing\Domain\Model\TicketCategory;
 use App\Pricing\Infrastructure\Doctrine\PricingRuleEntity;
 use App\Pricing\Infrastructure\Doctrine\PricingRuleRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -40,8 +39,8 @@ final class PricingRuleRepositoryTest extends KernelTestCase
             adjustmentValue: 10,
             activity: Activity::CityTour->value,
             activityOption: ActivityOption::Standard->value,
-            dateFrom: new DateTimeImmutable('2026-01-01'),
-            dateTo: new DateTimeImmutable('2026-01-31'),
+            dateFrom: new \DateTimeImmutable('2026-01-01'),
+            dateTo: new \DateTimeImmutable('2026-01-31'),
             daysOfWeek: [1],
             minAdvanceDays: 7,
         );
@@ -66,8 +65,8 @@ final class PricingRuleRepositoryTest extends KernelTestCase
             priority: 50,
             adjustmentType: 'percentage_discount',
             adjustmentValue: 10,
-            dateFrom: new DateTimeImmutable('2026-01-01'),
-            dateTo: new DateTimeImmutable('2026-01-31'),
+            dateFrom: new \DateTimeImmutable('2026-01-01'),
+            dateTo: new \DateTimeImmutable('2026-01-31'),
             daysOfWeek: [1],
             minAdvanceDays: 7,
         ));
@@ -85,8 +84,8 @@ final class PricingRuleRepositoryTest extends KernelTestCase
             priority: 30,
             adjustmentType: 'percentage_discount',
             adjustmentValue: 15,
-            dateFrom: new DateTimeImmutable('2026-02-01'),
-            dateTo: new DateTimeImmutable('2026-02-28'),
+            dateFrom: new \DateTimeImmutable('2026-02-01'),
+            dateTo: new \DateTimeImmutable('2026-02-28'),
         ));
 
         $this->repository->save(new PricingRuleEntity(
@@ -125,13 +124,13 @@ final class PricingRuleRepositoryTest extends KernelTestCase
             availability: new Availability(
                 activity: Activity::CityTour,
                 option: ActivityOption::Standard,
-                dateTime: new DateTimeImmutable('2026-01-12 09:00'),
+                dateTime: new \DateTimeImmutable('2026-01-12 09:00'),
                 ticketCategories: [
                     new TicketCategory('Adult', Money::fromDollars(100)),
                     new TicketCategory('Child', Money::fromDollars(50)),
                 ],
             ),
-            bookingDate: new DateTimeImmutable('2026-01-01 10:00'),
+            bookingDate: new \DateTimeImmutable('2026-01-01 10:00'),
         );
     }
 }

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Pricing\Domain\Model;
 
-use DateTimeImmutable;
-
 final readonly class PricingContext
 {
     public function __construct(
         private Availability $availability,
-        private DateTimeImmutable $bookingDate,
+        private \DateTimeImmutable $bookingDate,
     ) {
     }
 
@@ -19,7 +17,7 @@ final readonly class PricingContext
         return $this->availability;
     }
 
-    public function bookingDate(): DateTimeImmutable
+    public function bookingDate(): \DateTimeImmutable
     {
         return $this->bookingDate;
     }
@@ -28,7 +26,12 @@ final readonly class PricingContext
     {
         $activityDay = $this->availability->dateTime()->setTime(0, 0);
         $bookingDay = $this->bookingDate->setTime(0, 0);
+        $interval = $bookingDay->diff($activityDay);
 
-        return (int) $bookingDay->diff($activityDay)->days;
+        if (1 === $interval->invert) {
+            return 0;
+        }
+
+        return (int) $interval->days;
     }
 }

@@ -6,7 +6,6 @@ namespace App\Pricing\Domain\Model;
 
 use App\Pricing\Domain\Enum\Activity;
 use App\Pricing\Domain\Enum\ActivityOption;
-use DateTimeImmutable;
 
 final readonly class Availability
 {
@@ -16,10 +15,10 @@ final readonly class Availability
     public function __construct(
         private Activity $activity,
         private ActivityOption $option,
-        private DateTimeImmutable $dateTime,
+        private \DateTimeImmutable $dateTime,
         private array $ticketCategories,
     ) {
-        if ($this->ticketCategories === []) {
+        if ([] === $this->ticketCategories) {
             throw new \InvalidArgumentException('Availability must contain at least one ticket category.');
         }
     }
@@ -34,7 +33,7 @@ final readonly class Availability
         return $this->option;
     }
 
-    public function dateTime(): DateTimeImmutable
+    public function dateTime(): \DateTimeImmutable
     {
         return $this->dateTime;
     }

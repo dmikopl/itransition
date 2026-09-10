@@ -6,7 +6,6 @@ namespace App\Form\Dto;
 
 use App\Pricing\Domain\Enum\Activity;
 use App\Pricing\Domain\Enum\ActivityOption;
-use DateTimeImmutable;
 
 final class CalculatorInput
 {
@@ -14,11 +13,11 @@ final class CalculatorInput
     public function __construct(
         public ?Activity $activity = null,
         public ?ActivityOption $option = null,
-        public ?DateTimeImmutable $activityDate = null,
-        public ?DateTimeImmutable $bookingDate = null,
+        public ?\DateTimeImmutable $activityDate = null,
+        public ?\DateTimeImmutable $bookingDate = null,
         public array $ticketCategories = [],
     ) {
-        if ($this->ticketCategories === []) {
+        if ([] === $this->ticketCategories) {
             $this->ticketCategories = [
                 new TicketCategoryInput('Adult', 100),
                 new TicketCategoryInput('Child', 50),

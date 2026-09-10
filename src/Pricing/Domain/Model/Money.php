@@ -14,7 +14,7 @@ final readonly class Money
             throw new \InvalidArgumentException('Money amount cannot be negative.');
         }
 
-        if ($this->currency !== 'USD') {
+        if ('USD' !== $this->currency) {
             throw new \InvalidArgumentException('Only USD is supported.');
         }
     }
@@ -60,7 +60,7 @@ final readonly class Money
 
     public function divide(int $divisor): self
     {
-        if ($divisor === 0) {
+        if (0 === $divisor) {
             throw new \InvalidArgumentException('Division by zero.');
         }
 

@@ -28,7 +28,7 @@ final class PricingEngine
             static function (PricingRule $left, PricingRule $right): int {
                 $priorityComparison = $right->priority() <=> $left->priority();
 
-                if ($priorityComparison !== 0) {
+                if (0 !== $priorityComparison) {
                     return $priorityComparison;
                 }
 

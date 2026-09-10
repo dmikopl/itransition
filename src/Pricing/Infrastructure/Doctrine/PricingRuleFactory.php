@@ -24,7 +24,7 @@ final class PricingRuleFactory
     public function fromEntity(PricingRuleEntity $entity): PricingRule
     {
         $id = $entity->getId();
-        if ($id === null) {
+        if (null === $id) {
             throw new \LogicException('Cannot map a pricing rule entity without an id.');
         }
 
@@ -44,23 +44,23 @@ final class PricingRuleFactory
     {
         $conditions = [];
 
-        if ($entity->getActivity() !== null) {
+        if (null !== $entity->getActivity()) {
             $conditions[] = new ActivityCondition(Activity::from($entity->getActivity()));
         }
 
-        if ($entity->getActivityOption() !== null) {
+        if (null !== $entity->getActivityOption()) {
             $conditions[] = new OptionCondition(ActivityOption::from($entity->getActivityOption()));
         }
 
-        if ($entity->getDateFrom() !== null && $entity->getDateTo() !== null) {
+        if (null !== $entity->getDateFrom() && null !== $entity->getDateTo()) {
             $conditions[] = new DateRangeCondition($entity->getDateFrom(), $entity->getDateTo());
         }
 
-        if ($entity->getDaysOfWeek() !== null) {
+        if (null !== $entity->getDaysOfWeek()) {
             $conditions[] = new DayOfWeekCondition($entity->getDaysOfWeek());
         }
 
-        if ($entity->getMinAdvanceDays() !== null) {
+        if (null !== $entity->getMinAdvanceDays()) {
             $conditions[] = new AdvanceBookingCondition($entity->getMinAdvanceDays());
         }
 
@@ -73,10 +73,7 @@ final class PricingRuleFactory
             'percentage_discount' => new PercentageDiscount($entity->getAdjustmentValue()),
             'percentage_surcharge' => new PercentageSurcharge($entity->getAdjustmentValue()),
             'fixed_discount' => new FixedDiscount(Money::fromCents($entity->getAdjustmentValue())),
-            default => throw new \InvalidArgumentException(sprintf(
-                'Unknown adjustment type "%s".',
-                $entity->getAdjustmentType(),
-            )),
+            default => throw new \InvalidArgumentException(sprintf('Unknown adjustment type "%s".', $entity->getAdjustmentType())),
         };
     }
 }

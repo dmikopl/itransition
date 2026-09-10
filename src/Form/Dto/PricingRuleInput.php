@@ -6,7 +6,6 @@ namespace App\Form\Dto;
 
 use App\Pricing\Domain\Enum\Activity;
 use App\Pricing\Domain\Enum\ActivityOption;
-use DateTimeImmutable;
 
 final class PricingRuleInput
 {
@@ -18,8 +17,8 @@ final class PricingRuleInput
         public ?int $adjustmentValue = null,
         public ?Activity $activity = null,
         public ?ActivityOption $option = null,
-        public ?DateTimeImmutable $dateFrom = null,
-        public ?DateTimeImmutable $dateTo = null,
+        public ?\DateTimeImmutable $dateFrom = null,
+        public ?\DateTimeImmutable $dateTo = null,
         public array $daysOfWeek = [],
         public ?int $minAdvanceDays = null,
     ) {

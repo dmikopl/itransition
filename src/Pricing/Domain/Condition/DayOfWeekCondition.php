@@ -14,7 +14,7 @@ final readonly class DayOfWeekCondition implements PricingConditionInterface
     public function __construct(
         private array $daysOfWeek,
     ) {
-        if ($this->daysOfWeek === []) {
+        if ([] === $this->daysOfWeek) {
             throw new \InvalidArgumentException('At least one day of week is required.');
         }
 

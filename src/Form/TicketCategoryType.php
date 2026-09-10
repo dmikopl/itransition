@@ -12,20 +12,29 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @extends AbstractType<TicketCategoryInput>
+ */
 final class TicketCategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, [
-                'constraints' => [new Assert\NotBlank()],
+                'constraints' => [new Assert\NotBlank(message: 'Ticket category name is required.')],
+                'attr' => ['required' => true],
             ])
             ->add('price', NumberType::class, [
                 'scale' => 2,
                 'html5' => true,
                 'constraints' => [
-                    new Assert\NotNull(),
-                    new Assert\Positive(),
+                    new Assert\NotNull(message: 'Ticket price is required.'),
+                    new Assert\Positive(message: 'Ticket price must be greater than 0.'),
+                ],
+                'attr' => [
+                    'required' => true,
+                    'min' => '0.01',
+                    'step' => '0.01',
                 ],
             ]);
     }

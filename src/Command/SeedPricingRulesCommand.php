@@ -8,7 +8,6 @@ use App\Pricing\Domain\Enum\Activity;
 use App\Pricing\Domain\Enum\ActivityOption;
 use App\Pricing\Infrastructure\Doctrine\PricingRuleEntity;
 use App\Pricing\Infrastructure\Doctrine\PricingRuleRepository;
-use DateTimeImmutable;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -66,8 +65,8 @@ final class SeedPricingRulesCommand extends Command
                 adjustmentValue: 10,
                 activity: Activity::CityTour->value,
                 activityOption: ActivityOption::Standard->value,
-                dateFrom: new DateTimeImmutable('2026-01-01'),
-                dateTo: new DateTimeImmutable('2026-01-31'),
+                dateFrom: new \DateTimeImmutable('2026-01-01'),
+                dateTo: new \DateTimeImmutable('2026-01-31'),
                 daysOfWeek: [1],
                 minAdvanceDays: 7,
             ),

@@ -11,7 +11,6 @@ use App\Pricing\Domain\Model\Availability;
 use App\Pricing\Domain\Model\Money;
 use App\Pricing\Domain\Model\PricingContext;
 use App\Pricing\Domain\Model\TicketCategory;
-use DateTimeImmutable;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -53,8 +52,8 @@ final class CalculatePriceCommand extends Command
 
         $activity = Activity::from((string) $input->getOption('activity'));
         $option = ActivityOption::from((string) $input->getOption('option'));
-        $activityDate = new DateTimeImmutable((string) $input->getOption('activity-date'));
-        $bookingDate = new DateTimeImmutable((string) $input->getOption('booking-date'));
+        $activityDate = new \DateTimeImmutable((string) $input->getOption('activity-date'));
+        $bookingDate = new \DateTimeImmutable((string) $input->getOption('booking-date'));
 
         /** @var list<string> $ticketInputs */
         $ticketInputs = $input->getOption('ticket');
@@ -78,7 +77,7 @@ final class CalculatePriceCommand extends Command
         ));
 
         $io->section('Applied rules');
-        if ($result->appliedRules() === []) {
+        if ([] === $result->appliedRules()) {
             $io->writeln('None');
         } else {
             foreach ($result->appliedRules() as $rule) {

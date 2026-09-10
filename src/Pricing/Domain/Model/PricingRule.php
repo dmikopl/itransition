@@ -19,7 +19,7 @@ final readonly class PricingRule
         private array $conditions,
         private PriceAdjustmentInterface $adjustment,
     ) {
-        if (trim($this->name) === '') {
+        if ('' === trim($this->name)) {
             throw new \InvalidArgumentException('Pricing rule name cannot be empty.');
         }
     }

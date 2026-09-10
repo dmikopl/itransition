@@ -7,7 +7,7 @@ namespace App\Pricing\Domain\Model;
 final readonly class PricingResult
 {
     /**
-     * @param list<PricingRule> $appliedRules
+     * @param list<PricingRule>          $appliedRules
      * @param list<PricedTicketCategory> $categories
      */
     public function __construct(

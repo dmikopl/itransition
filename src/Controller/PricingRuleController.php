@@ -48,7 +48,7 @@ final class PricingRuleController extends AbstractController
                 activityOption: $input->option?->value,
                 dateFrom: $input->dateFrom,
                 dateTo: $input->dateTo,
-                daysOfWeek: $input->daysOfWeek === [] ? null : array_values($input->daysOfWeek),
+                daysOfWeek: [] === $input->daysOfWeek ? null : $input->daysOfWeek,
                 minAdvanceDays: $input->minAdvanceDays,
             );
 

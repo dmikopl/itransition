@@ -10,7 +10,6 @@ use App\Pricing\Domain\Model\Availability;
 use App\Pricing\Domain\Model\Money;
 use App\Pricing\Domain\Model\PricingContext;
 use App\Pricing\Domain\Model\TicketCategory;
-use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -23,8 +22,8 @@ final class PricingContextTest extends TestCase
         int $expectedDays,
     ): void {
         $context = new PricingContext(
-            availability: $this->availability(new DateTimeImmutable($activityDateTime)),
-            bookingDate: new DateTimeImmutable($bookingDate),
+            availability: $this->availability(new \DateTimeImmutable($activityDateTime)),
+            bookingDate: new \DateTimeImmutable($bookingDate),
         );
 
         self::assertSame($expectedDays, $context->daysInAdvance());
@@ -38,6 +37,7 @@ final class PricingContextTest extends TestCase
         yield 'brief example january' => ['2026-01-12 09:00', '2026-01-01 23:59', 11];
         yield 'exactly seven days' => ['2026-01-08 18:30', '2026-01-01 00:00', 7];
         yield 'same calendar day' => ['2026-01-01 20:00', '2026-01-01 08:00', 0];
+        yield 'booking after activity counts as zero' => ['2026-09-12 09:00', '2026-09-13 09:00', 0];
     }
 
     public function testAvailabilityRejectsEmptyTicketCategories(): void
@@ -47,7 +47,7 @@ final class PricingContextTest extends TestCase
         new Availability(
             activity: Activity::CityTour,
             option: ActivityOption::Standard,
-            dateTime: new DateTimeImmutable('2026-01-12 09:00'),
+            dateTime: new \DateTimeImmutable('2026-01-12 09:00'),
             ticketCategories: [],
         );
     }
@@ -67,7 +67,7 @@ final class PricingContextTest extends TestCase
         self::assertSame('Guided', ActivityOption::Guided->label());
     }
 
-    private function availability(DateTimeImmutable $dateTime): Availability
+    private function availability(\DateTimeImmutable $dateTime): Availability
     {
         return new Availability(
             activity: Activity::CityTour,

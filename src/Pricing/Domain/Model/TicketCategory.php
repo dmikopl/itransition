@@ -10,7 +10,7 @@ final readonly class TicketCategory
         private string $name,
         private Money $price,
     ) {
-        if (trim($this->name) === '') {
+        if ('' === trim($this->name)) {
             throw new \InvalidArgumentException('Ticket category name cannot be empty.');
         }
     }

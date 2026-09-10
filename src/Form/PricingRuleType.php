@@ -19,6 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @extends AbstractType<PricingRuleInput>
+ */
 final class PricingRuleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -94,13 +97,13 @@ final class PricingRuleType extends AbstractType
             'data_class' => PricingRuleInput::class,
             'constraints' => [
                 new Assert\Callback(static function (PricingRuleInput $input, ExecutionContextInterface $context): void {
-                    if ($input->dateFrom !== null && $input->dateTo !== null && $input->dateFrom > $input->dateTo) {
+                    if (null !== $input->dateFrom && null !== $input->dateTo && $input->dateFrom > $input->dateTo) {
                         $context->buildViolation('Date from must be before or equal to date to.')
                             ->atPath('dateTo')
                             ->addViolation();
                     }
 
-                    if (($input->dateFrom === null) xor ($input->dateTo === null)) {
+                    if ((null === $input->dateFrom) xor (null === $input->dateTo)) {
                         $context->buildViolation('Provide both date from and date to, or leave both empty.')
                             ->atPath('dateFrom')
                             ->addViolation();

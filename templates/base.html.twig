@@ -88,6 +88,14 @@
                 font: inherit;
             }
 
+            input.is-invalid,
+            .has-error input,
+            .has-error select,
+            input[aria-invalid="true"] {
+                border-color: #9b1c1c;
+                background: #fff5f5;
+            }
+
             button,
             input[type="submit"] {
                 margin-top: 0.5rem;
@@ -128,9 +136,40 @@
                 padding-left: 1.2rem;
             }
 
+            .form-help {
+                display: block;
+                margin-top: 0.2rem;
+                color: var(--muted);
+                font-size: 0.9rem;
+            }
+
+            .form-error-banner {
+                margin-bottom: 1rem;
+                padding: 0.75rem 1rem;
+                border: 1px solid #9b1c1c;
+                background: #fff5f5;
+                color: #9b1c1c;
+            }
+
+            .form-error-banner[hidden] {
+                display: none;
+            }
+
+            .form-errors {
+                margin: 0.35rem 0 0.5rem;
+                padding-left: 1.1rem;
+                list-style: disc;
+            }
+
             .error,
             .form-error,
+            ul.form-errors .form-error,
             ul li .form-error {
+                color: #9b1c1c;
+                font-weight: 600;
+            }
+
+            .has-error label {
                 color: #9b1c1c;
             }
         </style>

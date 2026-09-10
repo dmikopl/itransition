@@ -11,7 +11,8 @@
 
     <h1>New pricing rule</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form, {attr: { 'data-turbo': 'false' }}) }}
+        {{ form_errors(form) }}
         {{ form_row(form.name) }}
         {{ form_row(form.priority) }}
         {{ form_row(form.adjustmentType) }}

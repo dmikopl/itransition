@@ -15,7 +15,6 @@ use App\Pricing\Domain\Model\Availability;
 use App\Pricing\Domain\Model\Money;
 use App\Pricing\Domain\Model\PricingContext;
 use App\Pricing\Domain\Model\TicketCategory;
-use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -45,8 +44,8 @@ final class ConditionTest extends TestCase
     public function testDateRangeCondition(string $activityDate, bool $expected): void
     {
         $condition = new DateRangeCondition(
-            from: new DateTimeImmutable('2026-01-01'),
-            to: new DateTimeImmutable('2026-01-31'),
+            from: new \DateTimeImmutable('2026-01-01'),
+            to: new \DateTimeImmutable('2026-01-31'),
         );
 
         $context = $this->context(activityDateTime: $activityDate);
@@ -117,8 +116,8 @@ final class ConditionTest extends TestCase
 
         self::assertTrue((new DayOfWeekCondition([1]))->matches($context));
         self::assertTrue((new DateRangeCondition(
-            new DateTimeImmutable('2026-01-01'),
-            new DateTimeImmutable('2026-01-31'),
+            new \DateTimeImmutable('2026-01-01'),
+            new \DateTimeImmutable('2026-01-31'),
         ))->matches($context));
         self::assertTrue((new AdvanceBookingCondition(7))->matches($context));
     }
@@ -133,12 +132,12 @@ final class ConditionTest extends TestCase
             availability: new Availability(
                 activity: $activity,
                 option: $option,
-                dateTime: new DateTimeImmutable($activityDateTime),
+                dateTime: new \DateTimeImmutable($activityDateTime),
                 ticketCategories: [
                     new TicketCategory('Adult', Money::fromDollars(100)),
                 ],
             ),
-            bookingDate: new DateTimeImmutable($bookingDate),
+            bookingDate: new \DateTimeImmutable($bookingDate),
         );
     }
 }

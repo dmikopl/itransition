@@ -11,19 +11,49 @@
 
     <h1>Price calculator</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form, {
+        attr: {
+            'data-turbo': 'false',
+            'data-controller': 'calculator-validation',
+            'data-action': 'submit->calculator-validation#validate',
+            novalidate: 'novalidate',
+        }
+    }) }}
+        <div
+            class="form-error-banner"
+            data-calculator-validation-target="formError"
+            {% if form.vars.valid %}hidden{% endif %}
+        >
+            {% if not form.vars.valid %}
+                <strong>Please fix the form errors below.</strong>
+            {% endif %}
+        </div>
+
+        {{ form_errors(form) }}
+
         {{ form_row(form.activity) }}
         {{ form_row(form.option) }}
-        {{ form_row(form.activityDate) }}
-        {{ form_row(form.bookingDate) }}
+        {{ form_row(form.activityDate, {
+            attr: {
+                'data-calculator-validation-target': 'activityDate',
+                'data-action': 'change->calculator-validation#syncDateBounds input->calculator-validation#syncDateBounds',
+            }
+        }) }}
+        {{ form_row(form.bookingDate, {
+            attr: {
+                'data-calculator-validation-target': 'bookingDate',
+                'data-action': 'change->calculator-validation#syncDateBounds input->calculator-validation#syncDateBounds',
+            }
+        }) }}
         {{ form_row(form.ticketCategories) }}
         {{ form_row(form.calculate) }}
     {{ form_end(form) }}
 
     {% if result %}
-        <h2>Applied rules</h2>
+        <h2>Result</h2>
+        <h3>Applied rules</h3>
         {% if result.appliedRules is empty %}
-            <p>No pricing rules applied.</p>
+            <p>No pricing rules applied for these inputs.</p>
         {% else %}
             <ul>
                 {% for rule in result.appliedRules %}

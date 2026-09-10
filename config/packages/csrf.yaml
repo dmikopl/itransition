@@ -1,4 +1,5 @@
-# Enable stateless CSRF protection for forms and logins/logouts
+# Classic session CSRF for forms - no JS cookie dance required.
+# (Skeleton defaults + Turbo made browser POSTs return 422 with a blank-looking page.)
 framework:
     form:
         csrf_protection:
@@ -6,6 +7,5 @@ framework:
 
     csrf_protection:
         stateless_token_ids:
-            - submit
             - authenticate
             - logout

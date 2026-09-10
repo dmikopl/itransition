@@ -16,7 +16,6 @@ use App\Pricing\Domain\Model\Money;
 use App\Pricing\Domain\Model\PricingContext;
 use App\Pricing\Domain\Model\PricingRule;
 use App\Pricing\Domain\Model\TicketCategory;
-use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -154,8 +153,8 @@ final class PricingEngineTest extends TestCase
             conditions: [
                 new DayOfWeekCondition([1]),
                 new DateRangeCondition(
-                    new DateTimeImmutable('2026-01-01'),
-                    new DateTimeImmutable('2026-01-31'),
+                    new \DateTimeImmutable('2026-01-01'),
+                    new \DateTimeImmutable('2026-01-31'),
                 ),
                 new AdvanceBookingCondition(7),
             ],
@@ -169,13 +168,13 @@ final class PricingEngineTest extends TestCase
             availability: new Availability(
                 activity: Activity::CityTour,
                 option: ActivityOption::Standard,
-                dateTime: new DateTimeImmutable($activityDateTime),
+                dateTime: new \DateTimeImmutable($activityDateTime),
                 ticketCategories: [
                     new TicketCategory('Adult', Money::fromDollars(100)),
                     new TicketCategory('Child', Money::fromDollars(50)),
                 ],
             ),
-            bookingDate: new DateTimeImmutable($bookingDate),
+            bookingDate: new \DateTimeImmutable($bookingDate),
         );
     }
 }

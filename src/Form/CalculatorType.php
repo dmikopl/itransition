@@ -15,7 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @extends AbstractType<CalculatorInput>
+ */
 final class CalculatorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -34,19 +38,26 @@ final class CalculatorType extends AbstractType
             ->add('activityDate', DateType::class, [
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',
-                'constraints' => [new Assert\NotNull()],
+                'constraints' => [new Assert\NotNull(message: 'Activity date is required.')],
+                'attr' => ['required' => true],
             ])
             ->add('bookingDate', DateType::class, [
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',
-                'constraints' => [new Assert\NotNull()],
+                'constraints' => [new Assert\NotNull(message: 'Booking date is required.')],
+                'attr' => ['required' => true],
+                'help' => 'Must be on or before the activity date.',
             ])
             ->add('ticketCategories', CollectionType::class, [
                 'entry_type' => TicketCategoryType::class,
+                'entry_options' => [
+                    'label' => false,
+                ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'constraints' => [new Assert\Count(min: 1)],
+                'constraints' => [new Assert\Count(min: 1, minMessage: 'Add at least one ticket category.')],
+                'error_bubbling' => false,
             ])
             ->add('calculate', SubmitType::class);
     }
@@ -55,6 +66,20 @@ final class CalculatorType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => CalculatorInput::class,
+            'constraints' => [new Assert\Callback($this->validateDates(...))],
         ]);
+    }
+
+    public function validateDates(CalculatorInput $input, ExecutionContextInterface $context): void
+    {
+        if (null === $input->activityDate || null === $input->bookingDate) {
+            return;
+        }
+
+        if ($input->bookingDate > $input->activityDate) {
+            $context->buildViolation('Booking date must be on or before the activity date.')
+                ->atPath('bookingDate')
+                ->addViolation();
+        }
     }
 }

@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Pricing\Domain\Condition;
 
 use App\Pricing\Domain\Model\PricingContext;
-use DateTimeImmutable;
 
 final readonly class DateRangeCondition implements PricingConditionInterface
 {
     public function __construct(
-        private DateTimeImmutable $from,
-        private DateTimeImmutable $to,
+        private \DateTimeImmutable $from,
+        private \DateTimeImmutable $to,
     ) {
         if ($this->from > $this->to) {
             throw new \InvalidArgumentException('Date range start must be before or equal to end.');
