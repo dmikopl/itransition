@@ -20,6 +20,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+            Pricing:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Pricing/Infrastructure/Doctrine'
+                prefix: 'App\Pricing\Infrastructure\Doctrine'
+                alias: Pricing
 
 when@test:
     doctrine:
